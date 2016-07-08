@@ -1,0 +1,30 @@
+prise3:
+# Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50  
+# Position Controllers ---------------------------------------
+  axe_x_joint_position_controleur:
+    type: effort_controllers/JointPositionController
+    joint: axe_x_joint
+    pid: {p: 100.0, i: 10.1, d: 10.0}
+
+  axe_y_joint_position_controleur:
+    type: effort_controllers/JointPositionController
+    joint: axe_y_joint
+    pid: {p: 100.0, i: 10.1, d: 10.0}
+
+  axe_z_joint_position_controleur:
+    type: effort_controllers/JointPositionController
+    joint: axe_z_joint
+    pid: {p: 100.0, i: 10.1, d: 10.0}
+
+  rot_z_joint_position_controleur:
+    type: effort_controllers/JointPositionController
+    joint: rotation_joint
+    pid: {p: 100, i: 2.1, d: 10.0}
+
+  rot_laser_joint_position_controleur:
+    type: effort_controllers/JointPositionController
+    joint: laser_joint
+    pid: {p: 100, i: 10.1, d: 10.0}

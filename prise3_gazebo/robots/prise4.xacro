@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<!-- Revolute-Revolute Manipulator -->
+<robot name="prise3" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <link name="world"/>
+
+  <joint name="fixed" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+  </joint>
+
+
+  <link  name="base_link">
+    <inertial>
+      <origin  xyz="0 0 0" rpy="0 0 0" />
+      <mass value="54.7927946688811" />
+      <inertia
+        ixx="76.8709047512236"
+        ixy="-0.317641732156655"
+        ixz="-2.72714300565647"
+        iyy="59.4673166498106"
+        iyz="2.93869533447697"
+        izz="54.3371716853488" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://prise3/meshes/base_linkv2.stl" />
+      </geometry>
+      <material
+        name="">
+		<color  rgba="0.25 0.25 0.16 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://prise3/meshes/base_linkv2.stl" />
+      </geometry>
+    </collision>
+  </link>
+
+
+
+
+  <link name="axe_x_link">
+    <inertial>
+      <origin xyz="0 0 0"  rpy="0 0 0" />
+      <mass  value="3.24718562315346" />
+      <inertia
+        ixx="76.8709047512236"
+        ixy="-0.317641732156655"
+        ixz="-2.72714300565647"
+        iyy="59.4673166498106"
+        iyz="2.93869533447697"
+        izz="54.3371716853488" />
+	<mu>2.2</mu>
+	<mu2>0.2</mu2>
+	<kp>1.2</kp>
+    </inertial>
+    
+    <visual>
+
+   <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh  filename="package://prise3/meshes/axe_xv2.stl" />
+      </geometry>
+      <material  name="">
+        <color  rgba="0.32 0.32 0.32 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin  xyz="0 0 0"  rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://prise3/meshes/axe_xv2.stl" />
+      </geometry>
+    </collision>
+  </link>
+
+
+
+
+  <joint name="axe_x_joint" type="prismatic"> 
+          <origin xyz="0 -0.86 2.278" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child  link="axe_x_link" />
+     <axis  xyz="0 1 0" />
+    <limit lower="0" upper="1.6" effort="1" velocity="0.5" />
+     <dynamics damping ="1">     </dynamics>
+
+  </joint>
+
+<gazebo>
+  <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+    <robotNamespace>/prise3</robotNamespace>
+  </plugin>
+</gazebo>
+
+<transmission name="transmission_x">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="axe_x_joint">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+</robot>

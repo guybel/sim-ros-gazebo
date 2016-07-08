@@ -1,0 +1,17 @@
+<launch>
+  <rosparam file="$(find prise3_control)/config/prise3_control.yaml" command="load"/>
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/prise3" args="joint_state_controller 
+				       axe_x_joint_position_controleur 
+                                       axe_y_joint_position_controleur
+   		                       axe_z_joint_position_controleur
+                                       rot_z_joint_position_controleur
+				       rot_laser_joint_position_controleur  "/>
+
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+    respawn="false" output="screen">
+    <remap from="/joint_states" to="/prise3/joint_states" />
+  </node>
+
+</launch>
